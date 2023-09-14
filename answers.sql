@@ -43,7 +43,7 @@ const emp2 = await Human.findByPk(2);
 console.log(emp2)
 
 --Query 2
- const animal5 = await Animal.findByPk(5)
+ const animal5 = await Animal.findByPk(5);
  console.log(animal5)
 {
   animal_id: 5,
@@ -89,4 +89,38 @@ import { Op } from 'sequilize'
 await Animal.findAll({
     where: { birth_year: {[Op.gt]: 2015}
     }
+});
+
+
+--Query 5
+await Human.findAll({
+  where: { human_id: {[Op.between]: [2,6]}}
 })
+
+--Query 6
+await Animal.findAll({
+  where: {birth_year: null}
+});
+
+--Query 7
+
+await Animal.findAll({
+  where: {animal_id: {[Op.between]: [5,7]}}
+});
+
+SELECT * FROM animals WHERE species = 'fish' OR 'rabbit';
+
+await Animal.findAll({ where: [Op.or]: [ {species:'fish'}, {species:'rabbit'}]}})
+--Query 8
+
+await Human.findByPk(1) and Human.findByPk(3)
+
+const [human1, human3] = await Promise.all([
+  Human.findByPk(1),
+  Human.findByPk(3)
+]);
+
+console.log(human1, human3)
+
+
+
